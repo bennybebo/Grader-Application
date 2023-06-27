@@ -1,0 +1,7 @@
+<% if !user_signed_in? %>
+<%end%>
+
+<% if user_signed_in? %>
+<h1>Welcome to the Home Page!</h1>
+<p>Hello, <%= current_user.email %></p>
+<%end%>
