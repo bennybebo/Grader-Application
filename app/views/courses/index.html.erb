@@ -1,0 +1,24 @@
+<table>
+  <thead>
+    <tr>
+      <th>Course Code</th>
+      <th>Title</th>
+      <th>Sections</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @courses.each do |course| %>
+      <tr>
+        <td><%= course.course_code %></td>
+        <td><%= course.title %></td>
+        <td>
+          <ul>
+            <% course.sections.each do |section| %>
+              <li>Section <%= section.section_number %>: <%= section.instructor %></li>
+            <% end %>
+          </ul>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

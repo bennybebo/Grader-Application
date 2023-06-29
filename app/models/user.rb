@@ -6,6 +6,4 @@ class User < ApplicationRecord
   
   validates :email, presence: true, format: { with: /\A[a-zA-Z0-9_.+-]+@osu\.edu\z/, message: 'must be in OSU name.#@osu.edu format' }
 
-  enum role: [:student, :instructor, :admin]
-
 end
