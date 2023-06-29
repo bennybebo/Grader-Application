@@ -12,11 +12,23 @@
 
 ActiveRecord::Schema[7.0].define(version: 2023_06_27_201420) do
   create_table "courses", force: :cascade do |t|
+    t.string "course_description"
+    t.string "course_title"
+    t.integer "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "sections", force: :cascade do |t|
+    t.integer "section_number"
+    t.integer "class_number"
+    t.string "time"
+    t.string "day"
+    t.string "location"
+    t.string "component"
+    t.date "start_date"
+    t.date "end_date"
+    t.integer "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
