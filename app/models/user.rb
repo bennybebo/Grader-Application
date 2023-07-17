@@ -6,4 +6,14 @@ class User < ApplicationRecord
   
   validates :email, presence: true, format: { with: /\A[a-zA-Z0-9_.+-]+@osu\.edu\z/, message: 'must be in OSU name.#@osu.edu format' }
 
+  attribute :approved, :boolean, default: false
+
+  def active_for_authentication?
+    super && (approved? || user_type == 'Student')
+  end
+
+  def inactive_message
+    approved? ? super : :not_approved
+  end
+
 end
