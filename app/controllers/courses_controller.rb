@@ -1,8 +1,12 @@
+require 'json'
+require 'httparty'
+require 'pagy'
+
 class CoursesController < ApplicationController
     before_action :authenticate_user!
     before_action :set_course, only: [:show, :edit, :update, :destroy]
     before_action :check_admin_role, only: [:new, :create, :edit, :update, :destroy]
-  
+
     def index
       @courses = Course.all
     end
@@ -39,58 +43,108 @@ class CoursesController < ApplicationController
       redirect_to courses_url, notice: 'Course was successfully destroyed.'
     end
   
-    private
-  
     def set_course
       @course = Course.find(params[:id])
     end
   
-    def check_admin_role
-      unless current_user.admin?
-        redirect_to courses_path, notice: 'You are not authorized to perform this action.'
-      end
-    end
-  
     def course_params
-      params.require(:course).permit(:code, :title, :description, :level)
+      params.require(:course).permit(:id, :course_title, :course_description)
     end
 
-    def fetch_courses
-      # Construct the API URL with parameters
-      api_url = "https://content.osu.edu/v2/classes/search?q=&campus=col&p=1&term=1222&academic-career=ugrad&subject=cse"
-    
-      begin
-      response = HTTParty.get(api_url)
-          if response.code == 200
-            parsed_response = JSON.parse(response.body)
-            
-            if parsed_response["data"].present?
-              parsed_response["data"].each do |course_data|
-                course_code = course_data["courseCode"]
-                title = course_data["title"]
-                sections = course_data["sections"]
-    
-                course = Course.create(course_code: course_code, title: title)
-    
-                sections.each do |section_data|
-                  section_number = section_data["sectionNumber"]
-                  instructor = section_data["instructor"]
-    
-                  section = Section.create(section_number: section_number, instructor: instructor)
-                  course.sections << section
-                end
-              end
-            end
-            
-            flash[:success] = "Course data fetched successfully."
-          else
-            flash[:error] = "Error retrieving course data from the API."
-          end
-        rescue StandardError => e
-          flash[:error] = "An error occurred: #{e.message}"
+    def load_courses
+      base_url = "https://content.osu.edu/v2/classes/search"
+      search_string = 'cse'
+      term = '1238'
+      campus = 'col'
+      career = 'ugrd'
+      subject = 'cse'
+
+      client = HTTParty.get("https://content.osu.edu/v2/classes/search?q=cse&campus=col&term=1238")
+
+      # Parse the initial response and get data
+      json_response = JSON.parse(client.body)
+      data = json_response['data']
+
+      if data.nil? || data.empty?
+        puts "No data available."
+        exit
+      end
+
+      total_pages = data['totalPages']
+
+      # Initialize the Pagy object
+      pagy = Pagy.new(count: total_pages, page_param: 'p')
+      # Iterate over each page
+      pagy.pages.times do |page|
+        # Make request with updated page number
+        #puts "TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT"
+        response = HTTParty.get(base_url, query: {
+          q: 'cse',
+          campus: 'col',
+          p: page + 1,
+          'academic-career': 'ugrd',
+          subject: 'cse',
+          term: '1238'
+        })
+
+        # Parse response and get data
+        json_response = JSON.parse(response.body)
+        data = json_response['data']
+
+        if data.nil? || data.empty?
+          puts "No data available."
+          exit
         end
-        
-        redirect_to root_path
-      end    
+
+        # Loop over all the courses on the page
+        data['courses'].each do |course_entry|
+          course = course_entry['course']
+
+          course_number = course['catalogNumber']
+          course_name = course['title']
+          course_description = course['description']
+          course_campus = course['campus']
+          course_term = course['term']
+
+          puts "CSE #{course_number}: #{course_name}"
+          # Create or find the course in the database
+          course_record = Course.find_or_initialize_by(course_number: course_number)
+          course_record.course_name = course_name
+          course_record.course_description = course_description
+          course_record.campus = course_campus
+          course_record.term = course_term
+          <<-DOC
+          # Loop over all the sections
+          course_entry['sections'].each do |section_entry|
+            section_entry['meetings'].each do |meeting_entry|
+              startTime = meeting_entry['startTime']
+              endTime = meeting_entry['endTime']
+              days = meeting_entry.keys.select { |k| k.include?('day') }.map { |k| k.capitalize }
+              location = meeting_entry['room'] || meeting_entry['facilityDescription'] || 'TBA'
+
+              #Intialize variables outside of loop
+              instructorName = 'TBA' 
+              instructorEmail = '' 
+
+              ADD BACK INSTRUCTOR ENTRY LOOP
+
+
+              section = course_record.sections.build(
+                start_time: startTime,
+                end_time: endTime,
+                days: days.join(', '),
+                location: location,
+                instructor_name: instructorName,
+                instructor_email: instructorEmail
+              )
+              section.save
+            end
+          end
+          DOC
+        puts "\n"
+        course_record.save
+      end
+      render json: { message: 'Courses were successfully loaded.' }
+    end
   end
-  
+end 

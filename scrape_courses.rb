@@ -50,12 +50,15 @@ pagy.pages.times do |page|
   data['courses'].each do |course_entry|
     course = course_entry['course']
 
-    catalogNumber = course['catalogNumber']
-    title = course['title']
-    description = course['description']
+    course_id = course['course_id']
+    course_title = course['title']
+    course_description = course['description']
 
-    puts "CSE #{catalogNumber}: #{title}"
-    puts "Description: #{description}"
+    puts "CSE #{course_id}: #{course_title}"
+    # Create or find the course in the database
+    course_record = Course.find_or_initialize_by(course_id: course_id)
+    course_record.course_title = course_title
+    course_record.course_description = course_description
 
     # Loop over all the sections
     course_entry['sections'].each do |section_entry|
@@ -68,15 +71,24 @@ pagy.pages.times do |page|
         meeting_entry['instructors'].each do |instructor_entry|
           instructorName = instructor_entry['displayName'] || 'TBA'
           instructorEmail = instructor_entry['email'] ? " (#{instructor_entry['email']})" : ''
-          puts "Instructor: #{instructorName}#{instructorEmail}"
+          #puts "Instructor: #{instructorName}#{instructorEmail}"
         end
 
-        puts "Days: #{days.join(', ')}"
-        puts "Time: #{startTime} - #{endTime}"
-        puts "Location: #{location}"
+        section = course_record.sections.build(
+          start_time: start_time,
+          end_time: end_time,
+          days: days.join(', '),
+          location: location,
+          instructor_name: instructor_name,
+          instructor_email: instructor_email
+        )
+
+        #puts "Location: #{location}"
+        section.save
       end
     end
 
     puts "\n"
+    course_record.save
   end
 end

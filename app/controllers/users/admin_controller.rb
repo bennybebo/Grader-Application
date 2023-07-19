@@ -9,7 +9,7 @@ class Users::AdminController < ApplicationController
         @user = User.find(params[:id])
         @user.update(approved: true)
         redirect_to approval_page_path, notice: 'User approved.'
-      end
+    end
 
   
     def authenticate_admin!
