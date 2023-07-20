@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_19_224541) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_20_195103) do
   create_table "courses", primary_key: "course_number", id: :string, force: :cascade do |t|
     t.string "course_name"
     t.text "course_description"
@@ -18,7 +18,28 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_19_224541) do
     t.string "term"
   end
 
-  create_table "sections", force: :cascade do |t|
+  create_table "meetings", force: :cascade do |t|
+    t.time "start_time"
+    t.time "end_time"
+    t.boolean "monday"
+    t.boolean "tuesday"
+    t.boolean "wednesday"
+    t.boolean "thursday"
+    t.boolean "friday"
+    t.boolean "saturday"
+    t.boolean "sunday"
+    t.string "location"
+    t.integer "section_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sections", primary_key: "section_number", force: :cascade do |t|
+    t.integer "class_number"
+    t.string "component"
+    t.string "course_number"
+    t.integer "graders_needed"
+    t.integer "graders_assigned"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -37,4 +58,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_19_224541) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "meetings", "sections", column: "section_number", primary_key: "section_number"
+  add_foreign_key "sections", "courses", column: "course_number", primary_key: "course_number"
 end

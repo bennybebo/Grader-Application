@@ -101,46 +101,37 @@ class CoursesController < ApplicationController
           course = course_entry['course']
 
           course_number = course['catalogNumber']
-          course_name = course['title']
-          course_description = course['description']
-          course_campus = course['campus']
-          course_term = course['term']
-
-          puts "CSE #{course_number}: #{course_name}"
           # Create or find the course in the database
           course_record = Course.find_or_initialize_by(course_number: course_number)
-          course_record.course_name = course_name
-          course_record.course_description = course_description
-          course_record.campus = course_campus
-          course_record.term = course_term
-          <<-DOC
+          course_record.course_name = course['title']
+          course_record.course_description = course['description']
+          course_record.campus = course['campus']
+          course_record.term = course['term']
+
           # Loop over all the sections
           course_entry['sections'].each do |section_entry|
+            section_number  = section_entry['section']
+
+            section = Section.find_or_initialize_by(section_number: section_number)
+            section.class_number = section_entry['classNumber']
+            section.component = section_entry['component']
+            section.course_number = course_number
+            section.graders_needed = 1
+            section.graders_assigned = 0
+
+            #Loop over all meetings
             section_entry['meetings'].each do |meeting_entry|
+              meeting = Meeting.find_or_initialize_by(section_number: section_number)
               startTime = meeting_entry['startTime']
               endTime = meeting_entry['endTime']
               days = meeting_entry.keys.select { |k| k.include?('day') }.map { |k| k.capitalize }
               location = meeting_entry['room'] || meeting_entry['facilityDescription'] || 'TBA'
 
-              #Intialize variables outside of loop
-              instructorName = 'TBA' 
-              instructorEmail = '' 
-
-              ADD BACK INSTRUCTOR ENTRY LOOP
-
-
-              section = course_record.sections.build(
-                start_time: startTime,
-                end_time: endTime,
-                days: days.join(', '),
-                location: location,
-                instructor_name: instructorName,
-                instructor_email: instructorEmail
-              )
-              section.save
+              #Add instructor info somewhere??
+              meeting.save
             end
+            section.save
           end
-          DOC
         puts "\n"
         course_record.save
       end
