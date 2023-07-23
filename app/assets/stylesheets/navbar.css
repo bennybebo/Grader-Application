@@ -1,0 +1,27 @@
+/* app/assets/stylesheets/navbar.css */
+.navbar {
+    background-color: #fc2e2e;
+    padding: 10px;
+  }
+  
+  .navbar-nav {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .nav-item {
+    margin-right: 15px;
+  }
+  
+  .nav-item a {
+    color: #333;
+    text-decoration: none;
+    padding: 5px 10px;
+  }
+  
+  .nav-item a:hover {
+    background-color: #ddd;
+  }
+  

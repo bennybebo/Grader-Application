@@ -1,0 +1,9 @@
+<nav>
+  <ul>
+    <% if current_user.user_type == "Admin" %>
+        <li><%= link_to 'Account Approval', approval_page_path %></li>
+    <% end %>
+    <li><%= link_to 'Home', root_path %></li>
+    <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
+  </ul>
+</nav>

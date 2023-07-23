@@ -122,8 +122,8 @@ class CoursesController < ApplicationController
             #Loop over all meetings
             section_entry['meetings'].each do |meeting_entry|
               meeting = Meeting.find_or_initialize_by(section_number: section_number)
-              startTime = meeting_entry['startTime']
-              endTime = meeting_entry['endTime']
+              meeting.startTime = meeting_entry['startTime']
+              meeting.endTime = meeting_entry['endTime']
               days = meeting_entry.keys.select { |k| k.include?('day') }.map { |k| k.capitalize }
               location = meeting_entry['room'] || meeting_entry['facilityDescription'] || 'TBA'
 

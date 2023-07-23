@@ -9,15 +9,8 @@
   <tbody>
     <% @courses.each do |course| %>
       <tr>
-        <td><%= course.course_id %></td>
-        <td><%= course.course_title %></td>
-        <td>
-          <ul>
-            <% course.sections.each do |section| %>
-              <li>Section <%= section.section_number %>: <%= section.instructor %></li>
-            <% end %>
-          </ul>
-        </td>
+        <td><%= course.course_number %></td>
+        <td><%= course.course_name %></td>
       </tr>
     <% end %>
   </tbody>
