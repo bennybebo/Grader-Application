@@ -5,10 +5,9 @@ require 'pagy'
 class CoursesController < ApplicationController
     before_action :authenticate_user!
     before_action :set_course, only: [:show, :edit, :update, :destroy]
-    before_action :check_admin_role, only: [:new, :create, :edit, :update, :destroy]
 
     def index
-      @courses = Course.all
+      @courses = Course.order(course_number: :asc)
     end
   
     def show
@@ -39,8 +38,10 @@ class CoursesController < ApplicationController
     end
   
     def destroy
+      @course = Course.find(params[:id])
+      @course.sections.destroy_all
       @course.destroy
-      redirect_to courses_path, notice: 'Course was successfully destroyed.'
+      redirect_to courses_path, notice: 'Course and sections were successfully deleted.'
     end
   
     def set_course
