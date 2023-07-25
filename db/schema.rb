@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_20_195103) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_25_183735) do
   create_table "courses", primary_key: "course_number", id: :string, force: :cascade do |t|
     t.string "course_name"
     t.text "course_description"
@@ -34,7 +34,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_20_195103) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "sections", primary_key: "section_number", force: :cascade do |t|
+  create_table "sections", force: :cascade do |t|
+    t.integer "section_number"
     t.integer "class_number"
     t.string "component"
     t.string "course_number"
@@ -58,6 +59,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_20_195103) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "meetings", "sections", column: "section_number", primary_key: "section_number"
   add_foreign_key "sections", "courses", column: "course_number", primary_key: "course_number"
 end

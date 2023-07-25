@@ -111,8 +111,8 @@ class CoursesController < ApplicationController
           # Loop over all the sections
           course_entry['sections'].each do |section_entry|
             section_number  = section_entry['section']
-
-            section = Section.find_or_initialize_by(section_number: section_number)
+            section = Section.find_or_initialize_by(course_number: course_number, section_number: section_number)
+            section.course = course_record
             section.class_number = section_entry['classNumber']
             section.component = section_entry['component']
             section.course_number = course_number
@@ -134,9 +134,9 @@ class CoursesController < ApplicationController
               meeting.location = meeting_entry['facilityDescription'] || 'TBA'
 
               #Add instructor info somewhere??
-            meeting.save
+              meeting.save
             end
-          section.save
+            section.save
           end
         puts "\n"
         course_record.save
