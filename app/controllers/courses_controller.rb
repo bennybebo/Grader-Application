@@ -53,54 +53,55 @@ class CoursesController < ApplicationController
       params.require(:course).permit(:course_number, :course_name, :course_description)
     end
 
-    def load_courses
+    def load_courses()
       base_url = "https://content.osu.edu/v2/classes/search"
-      search_string = 'cse'
-      term = '1238'
-      campus = 'col'
-      career = 'ugrd'
-      subject = 'cse'
+    
+      term = params[:term]
+      campus = params[:campus]
+      career = params[:career]
 
-      client = HTTParty.get("https://content.osu.edu/v2/classes/search?q=cse&campus=col&term=1238")
-
+      query_params = {
+        q: 'cse',
+        term: term,
+        campus: campus,
+        'academic-career': career,
+        subject: 'cse'
+      }
+    
+      client = HTTParty.get(base_url, query: query_params)
+    
       # Parse the initial response and get data
       json_response = JSON.parse(client.body)
       data = json_response['data']
-
+    
       if data.nil? || data.empty?
         puts "No data available."
         exit
       end
-
+    
       total_pages = data['totalPages']
-
+    
       # Initialize the Pagy object
       pagy = Pagy.new(count: total_pages, page_param: 'p')
+    
       # Iterate over each page
       pagy.pages.times do |page|
         # Make request with updated page number
-        response = HTTParty.get(base_url, query: {
-          q: 'cse',
-          campus: 'col',
-          p: page + 1,
-          'academic-career': 'ugrd',
-          subject: 'cse',
-          term: '1238'
-        })
-
+        response = HTTParty.get(base_url, query: query_params.merge(p: page + 1))
+    
         # Parse response and get data
         json_response = JSON.parse(response.body)
         data = json_response['data']
-
+    
         if data.nil? || data.empty?
           puts "No data available."
           exit
         end
-
+    
         # Loop over all the courses on the page
         data['courses'].each do |course_entry|
           course = course_entry['course']
-
+    
           course_number = course['catalogNumber']
           # Create or find the course in the database
           course_record = Course.find_or_initialize_by(course_number: course_number)
@@ -108,7 +109,7 @@ class CoursesController < ApplicationController
           course_record.course_description = course['description']
           course_record.campus = course['campus']
           course_record.term = course['term']
-
+    
           # Loop over all the sections
           course_entry['sections'].each do |section_entry|
             section_number  = section_entry['section']
@@ -119,8 +120,8 @@ class CoursesController < ApplicationController
             section.course_number = course_number
             section.graders_needed = 1
             section.graders_assigned = 0
-
-            #Loop over all meetings
+    
+            # Loop over all meetings
             section_entry['meetings'].each do |meeting_entry|
               meeting = Meeting.find_or_initialize_by(section_number: section_number)
               meeting.start_time = meeting_entry['startTime']
@@ -133,17 +134,16 @@ class CoursesController < ApplicationController
               meeting.saturday = meeting_entry['saturday']
               meeting.sunday = meeting_entry['sunday']
               meeting.location = meeting_entry['facilityDescription'] || 'TBA'
-
-              #Add instructor info somewhere??
+    
+              # Add instructor info somewhere??
               meeting.save
             end
             section.save
           end
-        puts "\n"
-        course_record.save
+          puts "\n"
+          course_record.save
+        end
       end
       render json: { message: 'Courses were successfully loaded. Please refresh the page.' }
-    end
-
-  end
+    end    
 end 

@@ -1,4 +1,4 @@
-<h1> Course Catalog <%= current_user.user_type == 'Admin' ? button_to('Reload Courses', load_courses_courses_path, method: :get) : '' %></h1>
+<h1> Course Catalog <%= current_user.user_type == 'Admin' ? link_to('Reload Courses', reload_courses_form_path) : '' %></h1>
 
 <% if @courses.empty? %>
   <p>No courses loaded in the database. This must be done by an administrator.</p>
