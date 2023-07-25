@@ -40,7 +40,7 @@ class CoursesController < ApplicationController
   
     def destroy
       @course.destroy
-      redirect_to courses_url, notice: 'Course was successfully destroyed.'
+      redirect_to 'courses#index', notice: 'Course was successfully destroyed.'
     end
   
     def set_course
@@ -122,15 +122,21 @@ class CoursesController < ApplicationController
             #Loop over all meetings
             section_entry['meetings'].each do |meeting_entry|
               meeting = Meeting.find_or_initialize_by(section_number: section_number)
-              meeting.startTime = meeting_entry['startTime']
-              meeting.endTime = meeting_entry['endTime']
-              days = meeting_entry.keys.select { |k| k.include?('day') }.map { |k| k.capitalize }
-              location = meeting_entry['room'] || meeting_entry['facilityDescription'] || 'TBA'
+              meeting.start_time = meeting_entry['startTime']
+              meeting.end_time = meeting_entry['endTime']
+              meeting.monday = meeting_entry['monday']
+              meeting.tuesday = meeting_entry['tuesday']
+              meeting.wednesday = meeting_entry['wednesday']
+              meeting.thursday = meeting_entry['thursday']
+              meeting.friday = meeting_entry['friday']
+              meeting.saturday = meeting_entry['saturday']
+              meeting.sunday = meeting_entry['sunday']
+              meeting.location = meeting_entry['facilityDescription'] || 'TBA'
 
               #Add instructor info somewhere??
-              meeting.save
+            meeting.save
             end
-            section.save
+          section.save
           end
         puts "\n"
         course_record.save

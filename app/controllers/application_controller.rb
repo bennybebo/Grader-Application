@@ -10,13 +10,7 @@ class ApplicationController < ActionController::Base
     end  
 
     def after_sign_in_path_for(resource)
-      if resource.is_a?(User) && resource.user_type == 'Admin'
-        approval_page_path
-      elsif resource.user_type == 'Student' || resource.user_type == 'Instructor'
-        courses_path
-      else
-        super
-      end
+      super
     end
 
 end
