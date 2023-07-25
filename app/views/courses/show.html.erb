@@ -1,0 +1,41 @@
+<div class="showInformation">
+    <p>
+        <strong>Course Number:</strong>
+        <%= @course.course_number %>
+    </p>  
+
+    <p>
+        <strong>Course Name:</strong>
+        <%= @course.course_name %>
+    </p>
+
+    <p>
+        <strong>Course Description:</strong>
+        <%= @course.course_description %>
+    </p>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Section number</th>
+      <th>Class number</th>
+      <th>Component</th>
+      <th>Graders Needed</th>
+      <th>Graders Assigned</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @course.sections.each do |section| %>
+      <tr>
+        <td><%= section.section_number %></td>
+        <td><%= section.class_number %></td>
+        <td><%= section.component %></td>
+        <td><%= section.graders_needed %></td>
+        <td><%= section.graders_assigned %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
