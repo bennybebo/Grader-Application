@@ -27,6 +27,7 @@ class CoursesController < ApplicationController
     end
   
     def edit
+      @course = Course.find(params[:id])
     end
   
     def update
@@ -49,7 +50,7 @@ class CoursesController < ApplicationController
     end
   
     def course_params
-      params.require(:course).permit(:id, :course_title, :course_description)
+      params.require(:course).permit(:course_number, :course_name, :course_description)
     end
 
     def load_courses
@@ -78,7 +79,6 @@ class CoursesController < ApplicationController
       # Iterate over each page
       pagy.pages.times do |page|
         # Make request with updated page number
-        #puts "TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT"
         response = HTTParty.get(base_url, query: {
           q: 'cse',
           campus: 'col',
@@ -142,7 +142,8 @@ class CoursesController < ApplicationController
         puts "\n"
         course_record.save
       end
-      render json: { message: 'Courses were successfully loaded.' }
+      render json: { message: 'Courses were successfully loaded. Please refresh the page.' }
     end
+
   end
 end 

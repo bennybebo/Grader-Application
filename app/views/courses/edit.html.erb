@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Course</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+    }
+
+    .container {
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 800px; 
+      height: 400px; 
+      margin: 0 auto;
+      box-sizing: border-box; 
+      overflow: auto; 
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .field {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      resize: vertical; 
+      height: auto; 
+    }
+
+    .actions {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .actions input[type="submit"] {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .actions input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    .error-messages {
+      color: #f44336;
+      margin-bottom: 15px;
+    }
+
+    .links {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Edit Course</h1>
+    <%= form_for @course, url: { action: "update" } do |f| %>
+
+      <div class="field">
+        <%= f.label :course_name %>
+        <%= f.text_field :course_name %>
+      </div>
+
+      <div class="field">
+        <%= f.label :course_description %>
+        <%= f.text_area :course_description %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Update Course" %>
+      </div>
+    <% end %>
+  </div>
+</body>
+</html>
