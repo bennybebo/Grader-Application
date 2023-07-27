@@ -23,6 +23,7 @@
       <th>Component</th>
       <th>Graders Needed</th>
       <th>Graders Assigned</th>
+      <th>Meeting Information</th>
       <th>Submit Application</th>
     </tr>
   </thead>
@@ -36,10 +37,16 @@
         <td style="width: auto; padding: 10px;"><%= section.graders_needed %></td>
         <td style="width: auto; padding: 10px;"><%= section.graders_assigned %></td>
         <td style="width: auto; padding: 10px;">
+          <% section.meetings.each do |meeting| %>
+            <p>
+              <strong>Days:</strong> <%= meeting_day_string(meeting) %><br>
+              <strong>Time:</strong> <%= formatted_time_range(meeting.start_time, meeting.end_time) %><br>
+              <strong>Location:</strong> <%= meeting.location %>
+            </p>
+          <% end %>
         <!-- link_to 'Apply', apply_path(section) -->
         <!-- link_to 'Apply', new_grader_application_path(section) -->
-        <%= link_to 'Apply', new_grader_application_path(section_id: section.section_number) %>
-</td>
+        <td style="width: auto; padding: 10px;"><%= link_to 'Apply', new_grader_application_path(section_id: section.section_number) %></td>
       </tr>
     <% end %>
   </tbody>
