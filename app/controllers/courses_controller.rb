@@ -110,20 +110,25 @@ class CoursesController < ApplicationController
           course_record.campus = course['campus']
           course_record.term = course['term']
     
+          course_record.save
           # Loop over all the sections
           course_entry['sections'].each do |section_entry|
+            class_number = section_entry['classNumber']
             section_number  = section_entry['section']
-            section = Section.find_or_initialize_by(course_number: course_number, section_number: section_number)
+            section = Section.find_or_initialize_by(course_number: course_number, class_number: class_number)
+            section.section_number = section_entry['section']
             section.course = course_record
-            section.class_number = section_entry['classNumber']
             section.component = section_entry['component']
             section.course_number = course_number
             section.graders_needed = 1
             section.graders_assigned = 0
-    
+
+            section.save
             # Loop over all meetings
             section_entry['meetings'].each do |meeting_entry|
-              meeting = Meeting.find_or_initialize_by(section_number: section_number)
+              class_number = section_entry['classNumber']
+              meeting = Meeting.find_or_initialize_by(class_number: class_number)
+              meeting.section_number = section_entry['section']
               meeting.start_time = meeting_entry['startTime']
               meeting.end_time = meeting_entry['endTime']
               meeting.monday = meeting_entry['monday']
@@ -136,12 +141,10 @@ class CoursesController < ApplicationController
               meeting.location = meeting_entry['facilityDescription'] || 'TBA'
     
               # Add instructor info somewhere??
-              meeting.save
+              meeting.save!
             end
-            section.save
           end
           puts "\n"
-          course_record.save
         end
       end
       render json: { message: 'Courses were successfully loaded. Please refresh the page.' }
