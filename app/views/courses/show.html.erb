@@ -23,7 +23,7 @@
       <th>Component</th>
       <th>Graders Needed</th>
       <th>Graders Assigned</th>
-      <th colspan="3"></th>
+      <th>Submit Application</th>
     </tr>
   </thead>
 
@@ -35,6 +35,11 @@
         <td style="width: auto; padding: 10px;"><%= section.component %></td>
         <td style="width: auto; padding: 10px;"><%= section.graders_needed %></td>
         <td style="width: auto; padding: 10px;"><%= section.graders_assigned %></td>
+        <td style="width: auto; padding: 10px;">
+        <!-- link_to 'Apply', apply_path(section) -->
+        <!-- link_to 'Apply', new_grader_application_path(section) -->
+        <%= link_to 'Apply', new_grader_application_path(section_id: section.section_number) %>
+</td>
       </tr>
     <% end %>
   </tbody>

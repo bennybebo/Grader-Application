@@ -1,0 +1,20 @@
+<p>
+    <h2>New Application</h2>
+</p>
+
+<!-- form_with(model: @application, url: apply_path(params[:section_id])) do |form| -->
+<%= form_with(model: @application, url: create_grader_application_path(params[:section_id])) do |form| %>
+  <!-- form.hidden_field :section_num, value: @section.section_number -->
+
+  <!-- Email Input -->
+  <%= form.label :email %>
+  <%= form.email_field :email %>
+
+  <!-- Career Dropdown -->
+  <%= form.label :career %>
+  <%= form.select :career, options_for_select(["Undergraduate", "Graduate"]) %>
+
+  <!-- Add more fields as needed -->
+
+  <%= form.submit "Submit Grader Application" %>
+<% end %>

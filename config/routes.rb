@@ -18,4 +18,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root 'home#index'
+
+  # get '/apply/:section_id', to: 'grader_apply#apply', as: 'apply'
+  # get '/apply/:section_id', to: 'grader_apply#new', as: 'new_grader_application'
+  post '/apply/:section_id', to: 'grader_apply#create', as: 'create_grader_application'
+  resources :grader_apply, only: [:new, :create], param: :section_id, path: 'apply', as: 'grader_application'
+
 end
