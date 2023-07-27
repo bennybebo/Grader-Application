@@ -15,7 +15,7 @@
     </p>
 </div>
 
-<table>
+<table border="1">
   <thead>
     <tr>
       <th>Section number</th>
@@ -30,11 +30,11 @@
   <tbody>
     <% @course.sections.each do |section| %>
       <tr>
-        <td><%= section.section_number %></td>
-        <td><%= section.class_number %></td>
-        <td><%= section.component %></td>
-        <td><%= section.graders_needed %></td>
-        <td><%= section.graders_assigned %></td>
+        <td style="width: auto; padding: 10px;"><%= section.section_number %></td>
+        <td style="width: auto; padding: 10px;"><%= section.class_number %></td>
+        <td style="width: auto; padding: 10px;"><%= section.component %></td>
+        <td style="width: auto; padding: 10px;"><%= section.graders_needed %></td>
+        <td style="width: auto; padding: 10px;"><%= section.graders_assigned %></td>
       </tr>
     <% end %>
   </tbody>
