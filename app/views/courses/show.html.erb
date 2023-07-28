@@ -44,6 +44,7 @@
               <strong>Location:</strong> <%= meeting.location %>
             </p>
           <% end %>
+          </td>
         <!-- link_to 'Apply', apply_path(section) -->
         <!-- link_to 'Apply', new_grader_application_path(section) -->
         <td style="width: auto; padding: 10px;"><%= link_to 'Apply', new_grader_application_path(section_id: section.section_number) %></td>
