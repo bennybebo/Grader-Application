@@ -15,3 +15,8 @@ course.save!
 section = Section.new(section_number: '6442', class_number: '40', course_number: 'CSE 3901', component: 'CSE', 
     graders_needed: '1', graders_assigned: '1')
 section.save!
+
+meeting = Meeting.new(section_number: '6442', class_number: '40', start_time: Time.parse("6:30 PM"), 
+    end_time: Time.parse("8:00 PM"), monday: false, tuesday: true, wednesday: false, thursday: true, friday: false, 
+    location: 'online' )
+meeting.save!
