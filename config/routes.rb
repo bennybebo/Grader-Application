@@ -6,13 +6,14 @@ Rails.application.routes.draw do
   resources :courses do
     collection do
       get 'load_courses'
+      delete :delete_all_courses
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   get '/fetch_courses', to: 'courses#fetch_courses'
   get '/courses', to: 'courses#index'
   get '/reload_courses_form', to: 'courses#reload_courses_form', as: :reload_courses_form
-  
+
   patch '/admin/approve_user/:id', to: 'users/admin#approve_user', as: :admin_approve_user
   get '/approval', to: 'users/admin#approval_page', as: :approval_page
 
