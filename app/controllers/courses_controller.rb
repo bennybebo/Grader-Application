@@ -120,7 +120,7 @@ class CoursesController < ApplicationController
           course_record.campus = course['campus']
           course_record.term = course['term']
     
-          course_record.save
+          course_record.save!
           # Loop over all the sections
           course_entry['sections'].each do |section_entry|
             class_number = section_entry['classNumber']
@@ -133,7 +133,7 @@ class CoursesController < ApplicationController
             section.graders_needed = 1
             section.graders_assigned = 0
 
-            section.save
+            section.save!
             # Loop over all meetings
             section_entry['meetings'].each do |meeting_entry|
               class_number = section_entry['classNumber']
@@ -150,8 +150,21 @@ class CoursesController < ApplicationController
               meeting.sunday = meeting_entry['sunday']
               meeting.location = meeting_entry['facilityDescription'] || 'TBA'
     
-              # Add instructor info somewhere??
+              meeting.section = section
               meeting.save!
+              #Loop over instructor information
+              meeting_entry['instructors'].each do |instructor_entry|
+                if (instructor_entry['displayName'] != nil )
+                  instructor = Instructor.find_or_initialize_by(class_number: class_number)
+                  instructor.instructor_name = instructor_entry['displayName']
+                  instructor.instructor_email = instructor_entry['email']
+                  puts "TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT"
+                  puts instructor_entry['email']
+
+                  instructor.meeting = meeting
+                  instructor.save!
+                end
+              end
             end
           end
           puts "\n"

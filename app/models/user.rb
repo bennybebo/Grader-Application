@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   
-  validates :email, presence: true, format: { with: /\A[a-zA-Z]+(\.[0-9]+)?@osu\.edu\z/, message: 'must be in OSU name.#@osu.edu format' }
+validates :email, presence: true, format: { with: /\A[a-zA-Z\-]+(\.[0-9]+)?@osu\.edu\z/, message: 'must be in OSU name.#@osu.edu format' }
 
 
 

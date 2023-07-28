@@ -43,6 +43,12 @@
                 <strong>Days:</strong> <%= meeting_day_string(meeting) %><br>
                 <strong>Time:</strong> <%= formatted_time_range(meeting.start_time, meeting.end_time) %><br>
                 <strong>Location:</strong> <%= meeting.location %>
+                <% meeting.instructors.each do |instructor| %>
+                  <p>
+                    <strong>Instructor Name:</strong> <%= instructor.instructor_name %><br>
+                    <strong>Instructor Email:</strong> <%= instructor.instructor_email %>
+                  </p>
+                <% end %>
               </p>
             <% end %>
           <% else %>
