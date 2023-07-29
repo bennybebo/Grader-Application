@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'recommendations/new'
+  get 'recommendations/create'
   devise_for :users
   resources :users
 
@@ -9,6 +11,8 @@ Rails.application.routes.draw do
       delete :delete_all_courses
     end
   end
+  resources :recommendations, only: [:new, :create]
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   get '/fetch_courses', to: 'courses#fetch_courses'
   get '/courses', to: 'courses#index'

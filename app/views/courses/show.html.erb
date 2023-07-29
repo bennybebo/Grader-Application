@@ -64,7 +64,7 @@
         <% if current_user.user_type == 'Student' %>
           <td style="width: auto; padding: 10px;"><%= link_to 'Apply', new_grader_application_path(section_id: section.section_number) %></td>
         <% elsif current_user.user_type == 'Instructor' %>
-          <td style="width: auto; padding: 10px;"><%= link_to 'Recommend', new_grader_application_path(section_id: section.section_number) %></td>
+          <td style="width: auto; padding: 10px;"><%= link_to 'Submit Recommendation', new_recommendation_path %></td>
         <% end %>
       </tr>
     <% end %>

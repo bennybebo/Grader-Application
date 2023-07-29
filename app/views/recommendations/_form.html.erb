@@ -1,0 +1,30 @@
+<%= form_with(model: @recommendation, url: recommendations_path, method: :post) do |form| %>
+  <%= form.hidden_field :recommender_email, value: current_user.email %>
+
+  <div class="field">
+    <%= form.label :receiver_email, 'Student Email' %>
+    <%= form.text_field :receiver_email %>
+    <% if @recommendation.errors.has_key?(:receiver_email) %>
+      <p class="error">Student must sign up before receiving a recommendation.</p>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= form.label :recommendation_text, 'Recommendation Text' %>
+    <%= form.text_area :recommendation_text %>
+  </div>
+
+  <div class="field">
+    <%= form.label :recommendation_type, 'Recommendation Type' %>
+    <%= form.radio_button :recommendation_type, 'endorsement' %>
+    <%= form.label :recommendation_type, 'Endorsement' %>
+    <%= form.radio_button :recommendation_type, 'request_for_grader' %>
+    <%= form.label :recommendation_type, 'Request for Grader' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Submit Recommendation' %>
+  </div>
+<% end %>
+
+
