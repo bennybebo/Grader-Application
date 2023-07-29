@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_28_003414) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_29_193638) do
   create_table "applications", force: :cascade do |t|
     t.integer "app_id"
     t.string "student_id"
@@ -71,6 +71,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_28_003414) do
     t.index ["section_id"], name: "index_meetings_on_section_id"
   end
 
+  create_table "recommendations", force: :cascade do |t|
+    t.string "receiver_email", null: false
+    t.string "recommender_email", null: false
+    t.text "recommendation_text"
+    t.boolean "endorsement", default: false
+    t.boolean "request_for_grader", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "sections", primary_key: "class_number", force: :cascade do |t|
     t.integer "section_number"
     t.string "component"
@@ -100,5 +110,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_28_003414) do
   add_foreign_key "grades", "users", column: "student_id", primary_key: "email"
   add_foreign_key "instructors", "meetings", column: "class_number"
   add_foreign_key "meetings", "sections", primary_key: "class_number"
+  add_foreign_key "recommendations", "users", column: "receiver_email", primary_key: "email"
+  add_foreign_key "recommendations", "users", column: "recommender_email", primary_key: "email"
   add_foreign_key "sections", "courses", column: "course_number", primary_key: "course_number"
 end

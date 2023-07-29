@@ -1,5 +1,7 @@
 <h1> Course Catalog <%= current_user.user_type == 'Admin' ? link_to('Reload Courses', reload_courses_form_path) : '' %></h1>
-<%= button_to 'Delete All', delete_all_courses_courses_path, method: :delete, data: { confirm: 'Are you sure you want to delete all courses, sections, and meetings?' } %>
+<% if current_user.user_type == 'admin' %>
+  <%= button_to 'Delete All', delete_all_courses_courses_path, method: :delete, data: { confirm: 'Are you sure you want to delete all courses, sections, and meetings?' } %>
+<% end %>
 <% if @courses.empty? %>
   <p>No courses loaded in the database. This must be done by an administrator.</p>
 <% else %>
