@@ -19,9 +19,9 @@ This project aims to streamline the process of matching qualified undergraduate 
 4. In VS Code navigate to what folder you want to create the application. Once inside open a terminal and type the command: git clone https://github.com/cse-3901-sharkey/2023-SU-Team-2-Lab-2.git
 5. Then open the newly created app folder in VS Code
 6. Run these commands in your terminal:
-  rails db:migrate
-  bundle install
-  rails db:seed
+  'rails db:migrate'
+  'bundle install'
+  'rails db:seed'
 7. Now you are prepared to run the application. Type 'rails server' into terminal and follow the link printed in the terminal to open it in your browser. (Should look like: * Listening on http://127.0.0.1:3000)
 
 ## How to Use
