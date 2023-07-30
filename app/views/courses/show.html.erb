@@ -38,7 +38,16 @@
         <td style="width: auto; padding: 10px;"><%= section.section_number %></td>
         <td style="width: auto; padding: 10px;"><%= section.class_number %></td>
         <td style="width: auto; padding: 10px;"><%= section.component %></td>
-        <td style="width: auto; padding: 10px;"><%= section.graders_needed %></td>
+        <td style="width: auto; padding: 10px;">
+          <% if current_user.user_type == 'Admin' %>
+            <%= form_for section do |f| %>
+              <%= f.number_field :graders_needed %>
+              <%= f.submit 'Update' %>
+            <% end %>
+          <% else %>
+            <%= section.graders_needed %>
+          <% end %>
+        </td>
         <td style="width: auto; padding: 10px;"><%= section.graders_assigned %></td>
         <td style="width: auto; padding: 10px;">
           <% if section.meetings.present? %>
