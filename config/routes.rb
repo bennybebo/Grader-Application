@@ -20,7 +20,7 @@ Rails.application.routes.draw do
 
   patch '/admin/approve_user/:id', to: 'users/admin#approve_user', as: :admin_approve_user
   get '/approval', to: 'users/admin#approval_page', as: :approval_page
-
+  get '/grader_assignment', to: 'users/admin#grader_assignment_page', as: :grader_assignment_page
   # Defines the root path route ("/")
   root 'home#index'
 

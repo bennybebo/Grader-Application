@@ -82,7 +82,7 @@
   <div class="container">
     <h1>Submit Recommendation</h1>
     <%= form_with(model: @recommendation, url: recommendations_path, method: :post) do |form| %>
-
+      <%= form.hidden_field :class_number, value: @class_number %>
       <%= form.hidden_field :recommender_email, value: current_user.email %>
 
       <div class="field">
@@ -99,14 +99,14 @@
       </div>
 
       <div class="field">
-        <%= form.label :recommendation_type, 'Recommendation Type' %>
+        <%= form.label 'Recommendation Type' %>
         <div class="radio-container">
-          <%= form.radio_button :recommendation_type, 'endorsement' %>
-          <%= form.label :recommendation_type, 'Endorsement' %>
+          <%= form.radio_button :endorsement, true %>
+          <%= form.label :endorsement, 'Endorsement' %>
         </div>
         <div class="radio-container">
-          <%= form.radio_button :recommendation_type, 'request_for_grader' %>
-          <%= form.label :recommendation_type, 'Request for Grader' %>
+          <%= form.radio_button :request_for_grader, true %>
+          <%= form.label :request_for_grader, 'Request for Grader' %>
         </div>
       </div>
 

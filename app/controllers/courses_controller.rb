@@ -149,8 +149,8 @@ class CoursesController < ApplicationController
               meeting.saturday = meeting_entry['saturday']
               meeting.sunday = meeting_entry['sunday']
               meeting.location = meeting_entry['facilityDescription'] || 'TBA'
-    
               meeting.section = section
+              
               meeting.save!
               #Loop over instructor information
               meeting_entry['instructors'].each do |instructor_entry|
@@ -158,10 +158,8 @@ class CoursesController < ApplicationController
                   instructor = Instructor.find_or_initialize_by(class_number: class_number)
                   instructor.instructor_name = instructor_entry['displayName']
                   instructor.instructor_email = instructor_entry['email']
-                  puts "TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT"
-                  puts instructor_entry['email']
-
                   instructor.meeting = meeting
+
                   instructor.save!
                 end
               end

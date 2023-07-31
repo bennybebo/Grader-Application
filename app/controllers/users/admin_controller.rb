@@ -11,7 +11,11 @@ class Users::AdminController < ApplicationController
         redirect_to approval_page_path, notice: 'User approved.'
     end
 
-  
+    def grader_assignment_page
+      @requests = Recommendation.includes(:section).where(request_for_grader: true)
+      @endorsements = Recommendation.includes(:section).where(endorsement: true)
+    end
+
     def authenticate_admin!
       unless current_user&.user_type == 'Admin'
         redirect_to root_path, alert: "Access denied."

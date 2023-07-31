@@ -1,4 +1,5 @@
 class Recommendation < ApplicationRecord
+    belongs_to :section, foreign_key: 'class_number', primary_key: 'class_number', optional: true
     belongs_to :receiver, class_name: 'User', foreign_key: 'receiver_email', primary_key: 'email'
     belongs_to :recommender, class_name: 'User', foreign_key: 'recommender_email', primary_key: 'email'
 

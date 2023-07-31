@@ -3,6 +3,7 @@ class RecommendationsController < ApplicationController
 
   def new
     @recommendation = Recommendation.new
+    @class_number = params[:section_number]
   end
 
   def create
@@ -19,6 +20,6 @@ class RecommendationsController < ApplicationController
   private
 
   def recommendation_params
-    params.require(:recommendation).permit(:receiver_email, :recommendation_text, :request_for_grader, :submitted_by_student)
+    params.require(:recommendation).permit(:receiver_email, :recommender_email,:recommendation_text, :endorsement, :request_for_grader, :class_number)
   end
 end
