@@ -24,7 +24,12 @@
       <th>Graders Needed</th>
       <th>Graders Assigned</th>
       <th>Meeting Information</th>
-      <th>Submit Application</th>
+      <% if current_user.user_type == "Student" %>
+        <th>Submit Application</th>
+      <% end %>
+      <% if current_user.user_type == "Admin" %>
+        <th>Edit Graders Needed</th>
+      <% end %>
     </tr>
   </thead>
 
@@ -44,10 +49,17 @@
               <strong>Location:</strong> <%= meeting.location %>
             </p>
           <% end %>
-          </td>
+        </td>
         <!-- link_to 'Apply', apply_path(section) -->
         <!-- link_to 'Apply', new_grader_application_path(section) -->
-        <td style="width: auto; padding: 10px;"><%= link_to 'Apply', new_grader_application_path(section_id: section.section_number) %></td>
+        <% if current_user.user_type == "Student" %>
+          <td style="width: auto; padding: 10px;"><%= link_to 'Apply', new_grader_application_path(section_id: section.section_number) %></td>
+        <% end %>
+        <% if current_user.user_type == "Admin" %>
+        <!-- TODO: this doesnt work lol-->
+          <td style="width: auto; padding: 10px;"><%= link_to 'Edit Graders Needed', edit_section_path(section) %></td>
+        <% end %>
+        
       </tr>
     <% end %>
   </tbody>

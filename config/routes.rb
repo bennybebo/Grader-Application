@@ -25,4 +25,7 @@ Rails.application.routes.draw do
   post '/apply/:section_id', to: 'grader_apply#create', as: 'create_grader_application'
   resources :grader_apply, only: [:new, :create], param: :section_id, path: 'apply', as: 'grader_application'
 
+  resources :sections
+  # get '/sections/:id', to: 'sections#edit', as: 'section'
+
 end

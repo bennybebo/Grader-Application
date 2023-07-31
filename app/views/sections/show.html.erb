@@ -1,0 +1,30 @@
+<div class="showInformation">
+  <%= @section = Section.find(params[:id]); nil %>
+    <p>
+        <strong>Section Number:</strong>
+        <%= @section.section_number %>
+    </p>  
+
+    <p>
+        <strong>Course Number:</strong>
+        <%= @section.course_number %>
+    </p>
+
+    <p>
+        <strong>Graders Needed:</strong>
+        <%= @section.graders_needed %>
+    </p>
+
+    <p>
+        <strong>Graders Assigned:</strong>
+        <%= @section.graders_assigned %>
+    </p>
+
+    <% @section.meetings.each do |meeting| %>
+      <p>
+        <strong>Days:</strong> <%= meeting_day_string(meeting) %><br>
+        <strong>Time:</strong> <%= formatted_time_range(meeting.start_time, meeting.end_time) %><br>
+        <strong>Location:</strong> <%= meeting.location %>
+      </p>
+    <% end %>
+</div>
