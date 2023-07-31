@@ -7,11 +7,3 @@
 #   Character.create(name: "Luke", movie: movies.first)
 user = User.new(email: 'admin.1@osu.edu', password: 'password', user_type: 'Admin',  approved: true)
 user.save!
-
-course = Course.new(course_number: 'CSE 3901',course_name: 'Project: Web Apps', course_description: 'It is a nice course.', 
-    campus: 'COL', term: 'Summer')
-course.save!
-
-section = Section.new(section_number: '6442', class_number: '40', course_number: 'CSE 3901', component: 'CSE', 
-    graders_needed: '1', graders_assigned: '1')
-section.save!

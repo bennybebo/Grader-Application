@@ -30,6 +30,9 @@
       <% if current_user.user_type == "Admin" %>
         <th>Edit Graders Needed</th>
       <% end %>
+      <% if current_user.user_type == 'Instructor' %>
+        <th>Submit Recommendation</th>
+      <% end %>
     </tr>
   </thead>
 
@@ -39,15 +42,34 @@
         <td style="width: auto; padding: 10px;"><%= section.section_number %></td>
         <td style="width: auto; padding: 10px;"><%= section.class_number %></td>
         <td style="width: auto; padding: 10px;"><%= section.component %></td>
-        <td style="width: auto; padding: 10px;"><%= section.graders_needed %></td>
+        <td style="width: auto; padding: 10px;">
+          <% if current_user.user_type == 'Admin' %>
+            <%= form_for section do |f| %>
+              <%= f.number_field :graders_needed %>
+              <%= f.submit 'Update' %>
+            <% end %>
+          <% else %>
+            <%= section.graders_needed %>
+          <% end %>
+        </td>
         <td style="width: auto; padding: 10px;"><%= section.graders_assigned %></td>
         <td style="width: auto; padding: 10px;">
-          <% section.meetings.each do |meeting| %>
-            <p>
-              <strong>Days:</strong> <%= meeting_day_string(meeting) %><br>
-              <strong>Time:</strong> <%= formatted_time_range(meeting.start_time, meeting.end_time) %><br>
-              <strong>Location:</strong> <%= meeting.location %>
-            </p>
+          <% if section.meetings.present? %>
+            <% section.meetings.each do |meeting| %>
+              <p>
+                <strong>Days:</strong> <%= meeting_day_string(meeting) %><br>
+                <strong>Time:</strong> <%= formatted_time_range(meeting.start_time, meeting.end_time) %><br>
+                <strong>Location:</strong> <%= meeting.location %>
+                <% meeting.instructors.each do |instructor| %>
+                  <p>
+                    <strong>Instructor Name:</strong> <%= instructor.instructor_name %><br>
+                    <strong>Instructor Email:</strong> <%= instructor.instructor_email %>
+                  </p>
+                <% end %>
+              </p>
+            <% end %>
+          <% else %>
+            <p>No meetings scheduled for this section.</p>
           <% end %>
         </td>
         <!-- link_to 'Apply', apply_path(section) -->
@@ -56,10 +78,11 @@
           <td style="width: auto; padding: 10px;"><%= link_to 'Apply', new_grader_application_path(section_id: section.section_number) %></td>
         <% end %>
         <% if current_user.user_type == "Admin" %>
-        <!-- TODO: this doesnt work lol-->
           <td style="width: auto; padding: 10px;"><%= link_to 'Edit Graders Needed', edit_section_path(section) %></td>
         <% end %>
-        
+        <% if current_user.user_type == 'Instructor' %>
+          <td style="width: auto; padding: 10px;"><%= link_to "Submit Recommendation", new_recommendation_path(section_number: section.class_number) %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

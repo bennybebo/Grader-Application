@@ -1,0 +1,29 @@
+<h2>Grader Assignment Requests:</h2>
+<% @requests.each do |request| %>
+  <p>
+    <strong>Student Email:</strong> <%= request.receiver_email %> |
+    <strong>Instructor Email:</strong> <%= request.recommender_email %> |
+    <% if request.section %>
+      <strong>Course Name:</strong> <%= request.section.course.course_name %> |
+      <strong>Course Number:</strong> <%= request.section.course.course_number %> |
+      <strong>Section Class Number:</strong> <%= request.section.class_number %>
+    <% else %>
+      Section information not found.
+    <% end %>
+  </p>
+<% end %>
+
+<h2>Endorsements:</h2>
+<% @endorsements.each do |endorsement| %>
+  <p>
+    <strong>Student Email:</strong> <%= endorsement.receiver_email %> |
+    <strong>Instructor Email:</strong> <%= endorsement.recommender_email %> |
+    <% if endorsement.section %>
+      <strong>Course Name:</strong> <%= endorsement.section.course.course_name %> |
+      <strong>Course Number:</strong> <%= endorsement.section.course.course_number %> |
+      <strong>Section Class Number:</strong> <%= endorsement.section.class_number %>
+    <% else %>
+      Section information not found.
+    <% end %>
+  </p>
+<% end %>

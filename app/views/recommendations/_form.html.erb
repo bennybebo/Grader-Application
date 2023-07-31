@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Submit Recommendation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0; 
+    }
+
+    .container {
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 800px; 
+      height: auto; 
+      margin: 0 auto; 
+      box-sizing: border-box; 
+      overflow: auto; 
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .field {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .actions {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .actions input[type="submit"] {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .actions input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    .error {
+      color: #f44336;
+      margin-top: 5px;
+    }
+
+    .radio-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .radio-container label {
+      margin-left: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Submit Recommendation</h1>
+    <%= form_with(model: @recommendation, url: recommendations_path, method: :post) do |form| %>
+      <%= form.hidden_field :class_number, value: @class_number %>
+      <%= form.hidden_field :recommender_email, value: current_user.email %>
+
+      <div class="field">
+        <%= form.label :receiver_email, 'Student Email' %>
+        <%= form.text_field :receiver_email %>
+        <% if @recommendation.errors.has_key?(:receiver_email) %>
+          <p class="error">Student must sign up before receiving a recommendation.</p>
+        <% end %>
+      </div>
+
+      <div class="field">
+        <%= form.label :recommendation_text, 'Recommendation Text' %>
+        <%= form.text_area :recommendation_text %>
+      </div>
+
+      <div class="field">
+        <%= form.label 'Recommendation Type' %>
+        <div class="radio-container">
+          <%= form.radio_button :endorsement, true %>
+          <%= form.label :endorsement, 'Endorsement' %>
+        </div>
+        <div class="radio-container">
+          <%= form.radio_button :request_for_grader, true %>
+          <%= form.label :request_for_grader, 'Request for Grader' %>
+        </div>
+      </div>
+
+      <div class="actions">
+        <%= form.submit 'Submit Recommendation' %>
+      </div>
+    <% end %>
+  </div>
+</body>
+</html>

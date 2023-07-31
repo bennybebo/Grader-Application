@@ -24,16 +24,28 @@ class SectionsController < ApplicationController
         params.require(:section).permit(:graders_needed, :graders_assigned)
     end
     
+    # def update
+    #     @section = Section.find_by(params[:id])
+    #     if @section.update(section_params) #section_params OR section_number: params[:id] OR just params[:id]
+    #       redirect_to @section, notice: 'Section was successfully updated.'
+    #     else
+    #       render :edit
+    #     end
+    # end
+
     def update
-        @section = Section.find_by(params[:id])
-        if @section.update(section_params) #section_params OR section_number: params[:id] OR just params[:id]
-          redirect_to @section, notice: 'Section was successfully updated.'
+        @section = Section.find(params[:id])
+        if @section.update(section_params)
+          respond_to do |format|
+            format.html { redirect_to @section, notice: 'Graders needed was successfully updated.' }
+            format.json { render :show, status: :ok, location: @section }
+          end
         else
-          render :edit
+          respond_to do |format|
+            format.html { render :edit }
+            format.json { render json: @section.errors, status: :unprocessable_entity }
+          end
         end
     end
 
-    def set_section
-        @section = Section.find_by(section_number: params[:id])
-    end
 end
