@@ -5,8 +5,11 @@
 - [What the Program Is](#what-the-program-is)
 - [How to Download and Install It](#how-to-download-and-install-it)
 - [How to Use](#how-to-use)
-- [System Dependencies and Configuration](#System_dependencies_and_Configuration)
-- [Database Creation and Initialization](#Database_creation_and_Initialization)
+- [System Dependencies and Configuration](#system_dependencies_and_configuration)
+- [Database Creation and Initialization](#database_creation_and_initialization)
+- [How to Run the Test Suite](#how_to_run_the_test_suite)
+- [Services](#services)
+- [Deployment Instructions](#deployment_instructions)
 
 
 ## What the Program Is
@@ -43,6 +46,11 @@ To create the database, you may run 'rails db:create'.  However, Database 'db/de
 
 To migrate, you need to run 'rails db:migrate' to apply the database migration.
 
+## How to Run the Test Suite
+
+## Deployment Instructions
+This application is ready for the deployment.  You need to set up the envrionment for your platform and follow their respective deployment guides.
+
 
 
 (TEMP) ------------------
@@ -62,10 +70,11 @@ Things you may want to cover:
 * Database creation
 
 * Database initialization
-
+* 
 * How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+* Services 
+(job queues, cache servers, search engines, etc.)
 
 * Deployment instructions
 
