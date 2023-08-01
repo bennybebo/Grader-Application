@@ -19,7 +19,7 @@ class StudentApplicationsController < ApplicationController
   def destroy
     student_application = StudentApplication.find(params[:id])
     student_application.destroy
-    redirect_to root_path, notice: "Application has been deleted."
+    redirect_to grader_assignment_page_path, notice: "Application has been deleted."
   end
 
   private

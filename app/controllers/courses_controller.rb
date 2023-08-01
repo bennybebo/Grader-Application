@@ -40,10 +40,6 @@ class CoursesController < ApplicationController
   
     def destroy
       @course = Course.find(params[:id])
-      @course.sections.each do |section|
-        section.meetings.destroy_all
-      end
-      @course.sections.destroy_all
       @course.destroy
       redirect_to courses_path, notice: 'Course and sections were successfully deleted.'
     end
@@ -57,7 +53,6 @@ class CoursesController < ApplicationController
     end
 
     def delete_all_courses
-      Course.includes(sections: :meetings).destroy_all
       Course.destroy_all
   
       redirect_to courses_path, notice: 'All courses, sections, and meetings were successfully deleted.'

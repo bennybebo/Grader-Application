@@ -3,18 +3,15 @@
         <strong>Course Number:</strong>
         <%= @course.course_number %>
     </p>  
-
     <p>
         <strong>Course Name:</strong>
         <%= @course.course_name %>
     </p>
-
     <p>
         <strong>Course Description:</strong>
         <%= @course.course_description %>
     </p>
 </div>
-
 <table border="1">
   <thead>
     <tr>
@@ -35,23 +32,13 @@
       <% end %>
     </tr>
   </thead>
-
   <tbody>
     <% @course.sections.each do |section| %>
       <tr>
         <td style="width: auto; padding: 10px;"><%= section.section_number %></td>
         <td style="width: auto; padding: 10px;"><%= section.class_number %></td>
         <td style="width: auto; padding: 10px;"><%= section.component %></td>
-        <td style="width: auto; padding: 10px;">
-          <% if current_user.user_type == 'Admin' %>
-            <%= form_for section do |f| %>
-              <%= f.number_field :graders_needed %>
-              <%= f.submit 'Update' %>
-            <% end %>
-          <% else %>
-            <%= section.graders_needed %>
-          <% end %>
-        </td>
+        <td style="width: auto; padding: 10px;"><%= section.graders_needed %></td>
         <td style="width: auto; padding: 10px;"><%= section.graders_assigned %></td>
         <td style="width: auto; padding: 10px;">
           <% if section.meetings.present? %>
@@ -72,8 +59,6 @@
             <p>No meetings scheduled for this section.</p>
           <% end %>
         </td>
-        <!-- link_to 'Apply', apply_path(section) -->
-        <!-- link_to 'Apply', new_grader_application_path(section) -->
         <% if current_user.user_type == "Student" %>
           <td style="width: auto; padding: 10px;"><%= link_to 'Apply', new_student_application_path(section_number: section.class_number) %></td>
         <% end %>
