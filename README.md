@@ -5,11 +5,11 @@
 - [What the Program Is](#what-the-program-is)
 - [How to Download and Install It](#how-to-download-and-install-it)
 - [How to Use](#how-to-use)
-- [System Dependencies and Configuration](#system_dependencies_and_configuration)
-- [Database Creation and Initialization](#database_creation_and_initialization)
-- [How to Run the Test Suite](#how_to_run_the_test_suite)
+- [System Dependencies and Configuration](#system-dependencies-and-configuration)
+- [Database Creation and Initialization](#database-creation-and-initialization)
+- [How to Run the Test Suite](#how-to-run-the-test-suite)
 - [Services](#services)
-- [Deployment Instructions](#deployment_instructions)
+- [Deployment Instructions](#deployment-instructions)
 
 
 ## What the Program Is
