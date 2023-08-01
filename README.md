@@ -35,7 +35,7 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby version: Ruby version should be 3.2.0.  You may know your Ruby version from the command 'ruby -v'.
 
 * System dependencies
 
