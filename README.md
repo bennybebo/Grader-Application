@@ -48,7 +48,7 @@ To migrate, you need to run 'rails db:migrate' to apply the database migration.
 
 ## How to Run the Test Suite
 
-##Services
+## Services
 
 ## Deployment Instructions
 This application is ready for the deployment.  You need to set up the envrionment for your platform and follow their respective deployment guides.
