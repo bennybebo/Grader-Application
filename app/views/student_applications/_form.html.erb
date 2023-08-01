@@ -71,14 +71,13 @@
 </head>
 <body>
   <div class="container">
-    <h1>Why do you want to be a grader for this section?</h1>
     <%= form_with(model: @student_application, url: student_applications_path, method: :post) do |form| %>
       <%= form.hidden_field :class_number, value: @class_number %>
       <%= form.hidden_field :email, value: current_user.email %>
 
       <div class="field">
-        <%= form.label :application_text, 'Application Text' %>
-        <%= form.text_area :application_text %>
+        <%= form.label :application_text, 'Why do you want to be a grader for this section?' %>
+        <%= form.text_area :application_text, rows:20, placeholder: 'Enter your answer here...' %>
       </div>
 
       <div class="actions">
