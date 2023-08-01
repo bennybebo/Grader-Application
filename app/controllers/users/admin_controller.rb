@@ -14,6 +14,7 @@ class Users::AdminController < ApplicationController
     def grader_assignment_page
       @requests = Recommendation.includes(:section).where(request_for_grader: true)
       @endorsements = Recommendation.includes(:section).where(endorsement: true)
+      @applications = StudentApplication.all
     end
 
     def authenticate_admin!
