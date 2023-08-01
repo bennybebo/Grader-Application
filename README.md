@@ -5,7 +5,8 @@
 - [What the Program Is](#what-the-program-is)
 - [How to Download and Install It](#how-to-download-and-install-it)
 - [How to Use](#how-to-use)
-- [System dependencies and Configuration](#System_dependencies_and_Configuration)
+- [System Dependencies and Configuration](#System_dependencies_and_Configuration)
+- [Database Creation and Initialization](#Database_creation_and_Initialization)
 
 
 ## What the Program Is
@@ -28,11 +29,20 @@ This project aims to streamline the process of matching qualified undergraduate 
 ## How to Use
 You can sign up with a new account or use the default admin account to log in. If you signup as an instructor or admin you will need approval before being able to log in. This approval can be done by using the default admin account: credentials (email: admin.1@osu.edu, password: password).
 
-## System dependencies and Configuration
+## System Dependencies and Configuration
 Ruby version:   Ruby version should be 3.2.0.  To check your Rails version use the command 'ruby -v'.
+
 Rails version:  Rails version should be 7.0.  To check your Rails version use the command 'rails -v'.
+
 Node:           Node should be 16. 
+
 VScode:         We may recommend to use the latest version.
+
+## Database Creation and Initialization
+To create the database, you may run 'rails db:create'.  However, Database 'db/development.sqlite3' already exists.
+
+To migrate, you need to run 'rails db:migrate' to apply the database migration.
+
 
 
 (TEMP) ------------------
