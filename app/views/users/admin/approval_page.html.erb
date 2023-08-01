@@ -1,14 +1,87 @@
-<h1>Unapproved Users</h1>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Unapproved Users</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
 
-<% @unapproved_users.each do |user| %>
-  <div>
-    <p>
-      <strong>Email:</strong> <%= user.email %> |
-      <strong>User Type:</strong> <%= user.user_type %>
-    </p>
-    <div>
-      <%= button_to 'Approve', admin_approve_user_path(user), method: :patch, class: 'approve-button' %>
-      <%= button_to 'Remove', user, method: :delete, data: { confirm: 'Are you sure you want to remove this user?' } %>
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    div.user-container {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 20px; /* Add margin at the bottom */
+      background-color: #f9f9f9;
+      text-align: center;
+      max-width: 400px; /* Adjust the width as needed */
+      margin: 0 auto; /* Center the box horizontally */
+    }
+
+    div.user-container:not(:first-child) {
+      margin-top: 20px; /* Add margin at the top except for the first user container */
+    }
+
+    div.user-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+
+    p.user-email {
+      margin: 0;
+      text-align: center;
+    }
+
+    strong {
+      color: #333;
+    }
+
+    .approve-button,
+    .remove-button {
+      padding: 5px 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    .remove-button {
+      background-color: #f44336;
+    }
+
+    .button-container {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Unapproved Users</h1>
+  <% @unapproved_users.each do |user| %>
+    <div class="user-container">
+      <div class="user-info">
+        <p class="user-email">
+          <strong>Email:</strong> <%= user.email %> |
+        </p>
+        <p><strong>User Type:</strong> <%= user.user_type %></p>
+      </div>
+      <div class="button-container">
+        <%= button_to 'Approve', admin_approve_user_path(user), method: :patch, class: 'approve-button' %>
+        <%= button_to 'Remove', user, method: :delete, data: { confirm: 'Are you sure you want to remove this user?' }, class: 'remove-button' %>
+      </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
+</body>
+</html>
