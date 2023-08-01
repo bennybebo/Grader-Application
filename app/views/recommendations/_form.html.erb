@@ -99,16 +99,16 @@
       </div>
 
       <div class="field">
-        <%= form.label 'Recommendation Type' %>
-        <div class="radio-container">
-          <%= form.radio_button :endorsement, true %>
-          <%= form.label :endorsement, 'Endorsement' %>
-        </div>
-        <div class="radio-container">
-          <%= form.radio_button :request_for_grader, true %>
-          <%= form.label :request_for_grader, 'Request for Grader' %>
-        </div>
+      <%= form.label 'Recommendation Type' %>
+      <div class="radio-container">
+        <%= form.radio_button :recommendation_type, 'endorsement', checked: true %>
+        <%= form.label :endorsement, 'Endorsement' %>
       </div>
+      <div class="radio-container">
+        <%= form.radio_button :recommendation_type, 'request_for_grader', checked: false %>
+        <%= form.label :request_for_grader, 'Request for Grader' %>
+      </div>
+    </div>
 
       <div class="actions">
         <%= form.submit 'Submit Recommendation' %>
