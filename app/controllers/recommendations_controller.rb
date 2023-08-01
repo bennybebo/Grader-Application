@@ -17,6 +17,12 @@ class RecommendationsController < ApplicationController
     end
   end
 
+  def destroy
+    recommendation = Recommendation.find(params[:id])
+    recommendation.destroy
+    redirect_to root_path, notice: "Recommendation has been deleted."
+  end
+
   private
 
   def recommendation_params

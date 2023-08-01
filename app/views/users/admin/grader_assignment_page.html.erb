@@ -1,29 +1,45 @@
-<h2>Grader Assignment Requests:</h2>
-<% @requests.each do |request| %>
-  <p>
-    <strong>Student Email:</strong> <%= request.receiver_email %> |
-    <strong>Instructor Email:</strong> <%= request.recommender_email %> |
-    <% if request.section %>
-      <strong>Course Name:</strong> <%= request.section.course.course_name %> |
-      <strong>Course Number:</strong> <%= request.section.course.course_number %> |
-      <strong>Section Class Number:</strong> <%= request.section.class_number %>
-    <% else %>
-      Section information not found.
-    <% end %>
-  </p>
+<h2>Instructor Grader Requests:</h2>
+<% if @requests.empty? %>
+  <p>No grader assignment requests found.</p>
+<% else %>
+  <% @requests.each do |request| %>
+    <p>
+      <strong>Student Email:</strong> <%= request.receiver_email %> |
+      <strong>Instructor Email:</strong> <%= request.recommender_email %> |
+      <strong>Description:</strong> <%= request.recommendation_text %>
+      <% if request.section %>
+        <strong>Course Name:</strong> <%= request.section.course.course_name %> |
+        <strong>Course Number:</strong> <%= request.section.course.course_number %> |
+        <strong>Section Class Number:</strong> <%= request.section.class_number %>
+      <% else %>
+        Section information not found.
+      <% end %>
+
+      <%= button_to 'Make Grader', make_grader_path(email: request.receiver_email, class_number: request.section.class_number), method: :post, class: 'btn btn-primary' %>
+      <%= button_to 'Delete Recommendation', recommendation_path(request), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure you want to delete this recommendation?' } %>
+    </p>
+  <% end %>
 <% end %>
 
-<h2>Endorsements:</h2>
-<% @endorsements.each do |endorsement| %>
-  <p>
-    <strong>Student Email:</strong> <%= endorsement.receiver_email %> |
-    <strong>Instructor Email:</strong> <%= endorsement.recommender_email %> |
-    <% if endorsement.section %>
-      <strong>Course Name:</strong> <%= endorsement.section.course.course_name %> |
-      <strong>Course Number:</strong> <%= endorsement.section.course.course_number %> |
-      <strong>Section Class Number:</strong> <%= endorsement.section.class_number %>
-    <% else %>
-      Section information not found.
-    <% end %>
-  </p>
+<h2>Instructor Endorsements:</h2>
+<% if @endorsements.empty? %>
+  <p>No endorsements found.</p>
+<% else %>
+  <% @endorsements.each do |endorsement| %>
+    <p>
+      <strong>Student Email:</strong> <%= endorsement.receiver_email %> |
+      <strong>Instructor Email:</strong> <%= endorsement.recommender_email %> |
+      <strong>Description:</strong> <%= endorsement.recommendation_text %>
+      <% if endorsement.section %>
+        <strong>Course Name:</strong> <%= endorsement.section.course.course_name %> |
+        <strong>Course Number:</strong> <%= endorsement.section.course.course_number %> |
+        <strong>Section Class Number:</strong> <%= endorsement.section.class_number %>
+      <% else %>
+        Section information not found.
+      <% end %>
+
+      <%= button_to 'Make Grader', make_grader_path(email: endorsement.receiver_email, class_number: endorsement.section.class_number), method: :post, class: 'btn btn-primary' %>
+      <%= button_to 'Delete Recommendation', recommendation_path(endorsement), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure you want to delete this recommendation?' } %>
+    </p>
+  <% end %>
 <% end %>
