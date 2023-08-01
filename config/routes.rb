@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     end
   end
   resources :recommendations, only: [:new, :create, :destroy]
+  resources :student_applications, only: [:new, :create, :destroy]
   resources :sections, only: [:update]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   get '/fetch_courses', to: 'courses#fetch_courses'

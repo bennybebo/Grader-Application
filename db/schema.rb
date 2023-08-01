@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_01_024922) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_01_035034) do
   create_table "applications", force: :cascade do |t|
     t.integer "app_id"
     t.string "student_id"
@@ -99,6 +99,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_01_024922) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "student_applications", force: :cascade do |t|
+    t.string "email"
+    t.string "class_number"
+    t.text "application_text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -115,6 +123,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_01_024922) do
 
   add_foreign_key "applications", "users", column: "student_id", primary_key: "email"
   add_foreign_key "graders", "sections", column: "class_number", primary_key: "class_number"
+  add_foreign_key "graders", "sections", column: "class_number", primary_key: "class_number"
+  add_foreign_key "graders", "users", column: "email", primary_key: "email"
   add_foreign_key "graders", "users", column: "email", primary_key: "email"
   add_foreign_key "grades", "courses", column: "course_num", primary_key: "course_number"
   add_foreign_key "grades", "users", column: "student_id", primary_key: "email"
