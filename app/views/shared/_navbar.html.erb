@@ -1,8 +1,46 @@
-<%= stylesheet_link_tag 'navbar.css' %>
+<% if current_user %>
+  <% user_type = current_user.user_type %>
+<% else %>
+  <% user_type = nil %>
+<% end %>
+
+<style>
+  /* Basic reset to remove default list styles */
+  nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Style for the navigation bar */
+  nav {
+    background-color: #333; 
+    padding: 10px;
+  }
+
+  
+  nav li {
+    display: inline-block;
+    margin-right: 20px;
+  }
+
+  
+  nav a {
+    color: white; /* You can change the link color as per your design */
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  /* Hover effect for the links */
+  nav a:hover {
+    text-decoration: underline;
+  }
+</style>
+
 <nav>
   <ul>
     <li><%= link_to 'Home', root_path %></li>
-    <% if current_user.user_type == "Admin" %>
+    <% if user_type == "Admin" %>
       <li><%= link_to 'Account Approval', approval_page_path %></li>
       <li><%= link_to 'Grader Assignment', grader_assignment_page_path %></li>
     <% end %>
