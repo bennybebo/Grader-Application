@@ -4,12 +4,10 @@
 
 - [What the Program Is](#what-the-program-is)
 - [How to Download and Install It](#how-to-download-and-install-it)
-- [How to Use](#how-to-use)
 - [System Dependencies and Configuration](#system-dependencies-and-configuration)
 - [Database Creation and Initialization](#database-creation-and-initialization)
-- [How to Run the Test Suite](#how-to-run-the-test-suite)
-- [Services](#services)
-- [Deployment Instructions](#deployment-instructions)
+- [How to Use](#how-to-use)
+
 
 
 ## What the Program Is
@@ -29,9 +27,6 @@ This project aims to streamline the process of matching qualified undergraduate 
   'rails db:seed'
 7. Now you are prepared to run the application. Type 'rails server' into terminal and follow the link printed in the terminal to open it in your browser. (Should look like: * Listening on http://127.0.0.1:3000)
 
-## How to Use
-You can sign up with a new account or use the default admin account to log in. If you signup as an instructor or admin you will need approval before being able to log in. This approval can be done by using the default admin account: credentials (email: admin.1@osu.edu, password: password).
-
 ## System Dependencies and Configuration
 Ruby version:   Ruby version should be 3.2.0.  To check your Rails version use the command 'ruby -v'.
 
@@ -41,44 +36,18 @@ Node:           Node should be 16.
 
 VScode:         We may recommend to use the latest version.
 
+
 ## Database Creation and Initialization
-To create the database, you may run 'rails db:create'.  However, Database 'db/development.sqlite3' already exists.
+Before running the program, there are a few steps to do to setup the database.
 
-To migrate, you need to run 'rails db:migrate' to apply the database migration.
+1. To create the database, you may run 'rails db:create'.  However, Database 'db/development.sqlite3' already exists.
 
-## How to Run the Test Suite
+2. To migrate, you need to run 'rails db:migrate' to apply the database migration.
 
-## Services
-
-## Deployment Instructions
-This application is ready for the deployment.  You need to set up the envrionment for your platform and follow their respective deployment guides.
+3. To make seed, you need to run 'rails db:seed' to create a default admin user account for approving new sign-ups.
 
 
+## How to Use
+Please start with the default admin user (email: admin.1@osu.edu, password: password) account. After logging in with admin email and password, go to top bar and click Course Catalog. It will direct to an empty page of Course Catalog for now. Click Reload Courses, and all the course information will be loaded to the system. (Click Course Catalog to refresh the page.)
 
-(TEMP) ------------------
-# README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version (done)
-
-* System dependencies (done)
-
-* Configuration (done)
-
-* Database creation
-
-* Database initialization
-* 
-* How to run the test suite
-
-* Services 
-(job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
+Now, you can log out admin user account and sign up for the student, instructor, or admin user account. Student user account can be signed up directly, while both instructor and admin user account need approval from existed admin user. The approval can be done in Account Approval page in admin user homepage.
