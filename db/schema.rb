@@ -97,6 +97,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_01_185632) do
   end
 
   add_foreign_key "graders", "sections", column: "class_number", primary_key: "class_number"
+  add_foreign_key "graders", "sections", column: "class_number", primary_key: "class_number"
+  add_foreign_key "graders", "users", column: "email", primary_key: "email"
   add_foreign_key "graders", "users", column: "email", primary_key: "email"
   add_foreign_key "instructors", "meetings", column: "class_number"
   add_foreign_key "meetings", "sections", primary_key: "class_number"
